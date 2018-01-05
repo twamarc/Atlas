@@ -37,360 +37,11 @@ define(['knockout',
 		});
 		self.newConceptSetName = ko.observable(self.conceptSet()
 			.name() + " - Candidate Controls");
+		self.csTarget = ko.observable();
+		self.csTargetCaption = ko.observable();
 
-		self.fields = {
-			id: {
-				propName: 'conceptId',
-				value: d => d.conceptId,
-				isColumn: true,
-				isFacet: false,
-				colIdx: 0,
-				label: 'Id',
-				isField: true,
-			},
-			name: {
-				propName: 'conceptName',
-				value: d => {
-					var valid = true; //d.INVALID_REASON_CAPTION == 'Invalid' ? 'invalid' : '';
-					return '<a class=' + valid + ' href=\'#/concept/' + d.conceptId + '\'>' + d.conceptName + '</a>';
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 1,
-				label: 'Name',
-				isField: true,
-			},
-			domainId: {
-				propName: 'domainId',
-				value: d => d.domainId,
-				isColumn: true,
-				isFacet: false,
-				colIdx: 2,
-				label: 'Domain Id',
-				isField: true,
-			},
-			medlineCT: {
-				propName: 'medlineCt',
-				value: d => {
-					return d.medlineCt.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 3,
-				label: 'Medline CT',
-				isField: true,
-			},
-			medlineCase: {
-				propName: 'medlineCase',
-				value: d => {
-					return d.medlineCase.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 4,
-				label: 'Medline Case',
-				isField: true,
-			},
-			medlineOther: {
-				propName: 'medlineOther',
-				value: d => {
-					return d.medlineOther.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 4,
-				label: 'Medline Other',
-				isField: true,
-			},
-			semmeddbCtT: {
-				propName: 'semmeddbCtT',
-				value: d => {
-					return d.semmeddbCtT.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 5,
-				label: 'SemMedDB CT (True)',
-				isField: true,
-				visible: false,
-			},
-			semmeddbCaseT: {
-				propName: 'semmeddbCaseT',
-				value: d => {
-					return d.semmeddbCaseT.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 6,
-				label: 'SemMedDB Case (True)',
-				isField: true,
-				visible: false,
-			},
-			semmeddbOtherT: {
-				propName: 'semmeddbOtherT',
-				value: d => {
-					return d.semmeddbOtherT.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 6,
-				label: 'SemMedDB Other (True)',
-				isField: true,
-				visible: false,
-			},
-			semmeddbCtF: {
-				propName: 'semmeddbCtF',
-				value: d => {
-					return d.semmeddbCtF.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 7,
-				label: 'SemMedDB CT (False)',
-				isField: true,
-				visible: false,
-			},
-			semmeddbCaseF: {
-				propName: 'semmeddbCaseF',
-				value: d => {
-					return d.semmeddbCaseF.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 8,
-				label: 'SemMedDB Case (False)',
-				isField: true,
-				visible: false,
-			},
-			semmeddbOtherF: {
-				propName: 'semmeddbOtherF',
-				value: d => {
-					return d.semmeddbOtherF.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 9,
-				label: 'SemMedDB Other (False)',
-				isField: true,
-				visible: false,
-			},
-			euSPC: {
-				propName: 'euSPC',
-				value: d => {
-					return d.euSPC.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 11,
-				label: 'EU SPC',
-				isField: true,
-				visible: false,
-			},
-			splicerADR: {
-				propName: 'splADR',
-				value: d => {
-					return d.splADR.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 12,
-				label: 'Splicer ADR',
-				isField: true,
-			},
-			aers: {
-				propName: 'aers',
-				value: d => {
-					return d.aers.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 13,
-				label: 'AERS',
-				isField: true,
-
-			},
-			aersPRR: {
-				propName: 'aersPRR',
-				value: d => {
-					return (Math.ceil(d.aersPRR * 1000) / 1000)
-						.toFixed(4);
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 14,
-				label: 'AERS PRR',
-				isField: true,
-			},
-			prediction: {
-				propName: 'prediction',
-				value: d => {
-					return (Math.ceil(d.prediction * 1000) / 1000)
-						.toFixed(4);
-				},
-				isColumn: true,
-				isFacet: false,
-				colIdx: 15,
-				label: 'Prediction',
-				isField: true,
-			},
-			RC: {
-				propName: 'recordCount',
-				value: d => d.recordCount,
-				isColumn: true,
-				isFacet: false,
-				colIdx: 16,
-				label: '<i id="dtNegCtrlRC" class="fa fa-database" aria-hidden="true"></i> RC',
-				isField: true,
-			},
-			DRC: {
-				propName: 'descendantRecordCount',
-				value: d => d.descendantRecordCount,
-				isColumn: true,
-				isFacet: false,
-				colIdx: 17,
-				label: '<i id="dtNegCtrlDRC" class="fa fa-database" aria-hidden="true"></i> DRC',
-				isField: true,
-			},
-			fControls: {
-				propName: 'medlineCt',
-				value: d => {
-					if (d.medlineCt == 0 &&
-						d.medlineCase == 0 &&
-						d.medlineOther == 0 &&
-						d.splADR == 0 &&
-						d.aersPRR.toFixed(2) < 2.00 &&
-						d.prediction.toFixed(2) < 0.10) {
-						return 'Negative Controls';
-					} else if (d.prediction.toFixed(2) > 0.80) {
-						return 'Positive Controls'
-					} else {
-						return 'Other'
-					}
-				},
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-				label: 'Subset to candidate',
-			},
-			fRC: {
-				propName: 'fRecordCount',
-				label: 'Has Records',
-				value: d => {
-					var val = parseInt(d.recordCount.replace(/\,/g, '')); // Remove comma formatting and treat as int
-					if (val > 0) {
-						return 'true'
-					} else {
-						return 'false'
-					}
-				},
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-			},
-			fDRC: {
-				propName: 'fDescendantRecordCount',
-				label: 'Has Descendant Records',
-				value: d => {
-					var val = parseInt(d.descendantRecordCount.replace(/\,/g, '')); // Remove comma formatting and treat as int
-					if (val > 0) {
-						return 'true'
-					} else {
-						return 'false'
-					}
-				},
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-			},
-			fMedlineCT: {
-				propName: 'medlineCt',
-				label: 'Medline CT',
-				value: d => {
-					if (d.medlineCt == 0) {
-						return '0';
-					} else if (d.medlineCt > 0 && d.medlineCt <= 10) {
-						return '1-10'
-					} else {
-						return '11 +'
-					}
-				},
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-			},
-			fMedlineCase: {
-				propName: 'medlineCase',
-				label: 'Medline Case',
-				value: d => {
-					if (d.medlineCase == 0) {
-						return '0';
-					} else if (d.medlineCase > 0 && d.medlineCase <= 10) {
-						return '1-10'
-					} else {
-						return '11 +'
-					}
-				},
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-			},
-			fMedlineOther: {
-				propName: 'medlineOther',
-				label: 'Medline Other',
-				value: d => {
-					if (d.medlineOther == 0) {
-						return '0';
-					} else if (d.medlineOther > 0 && d.medlineOther <= 10) {
-						return '1-10'
-					} else {
-						return '11 +'
-					}
-				},
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-			},
-			fSplicer: {
-				propName: 'splADR',
-				label: 'Splicer ADR',
-				value: d => d.splADR,
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-			},
-			fAERS: {
-				propName: 'aers',
-				label: 'AERS',
-				value: d => {
-					if (d.aers == 0) {
-						return '0';
-					} else if (d.aers > 0 && d.aers <= 10) {
-						return '1-10'
-					} else if (d.aers > 10 && d.aers <= 100) {
-						return '11-100'
-					} else {
-						return '100+'
-					}
-				},
-				isField: true,
-				isColumn: false,
-				isFacet: true,
-			}
-		}
-
-		self.negControlColumns = [{
+		self.negControlColumns = [
+			{
 				title: 'Id',
 				data: d => d.conceptId,
 			},
@@ -402,121 +53,105 @@ define(['knockout',
 				},
 			},
 			{
-				title: 'Domain Id',
+				title: 'Domain',
 				data: d => d.domainId,
-			},
-			{
-				title: 'Medline CT',
-				data: d => {
-					return d.medlineCt.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-			},
-			{
-				title: 'Medline Case',
-				data: d => {
-					return d.medlineCase.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-			},
-			{
-				title: 'Medline Other',
-				data: d => {
-					return d.medlineOther.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-			},
-			{
-				title: 'SemMedDB CT (True)',
-				data: d => {
-					return d.semmeddbCtT.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
 				visible: false,
 			},
 			{
-				title: 'SemMedDB Case (True)',
+				title: 'Suggested Negative Control',
 				data: d => {
-					return d.semmeddbCaseT.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					return d.negativeControl.toString() == "1" ? 'Y' : 'N';
 				},
-				visible: false,
 			},
 			{
-				title: 'SemMedDB Other (True)',
+				title: 'Person Count RC',
 				data: d => {
-					return d.semmeddbOtherT.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				visible: false,
-			},
-			{
-				title: 'SemMedDB CT (False)',
-				data: d => {
-					return d.semmeddbCtF.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				visible: false,
-			},
-			{
-				title: 'SemMedDB Case (False)',
-				data: d => {
-					return d.semmeddbCaseF.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				visible: false,
-			},
-			{
-				title: 'SemMedDB Other (False)',
-				data: d => {
-					return d.semmeddbOtherF.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				visible: false,
-			},
-			{
-				title: 'euSPC',
-				data: d => {
-					return d.euSPC.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				},
-				visible: false,
-			},
-			{
-				title: 'Splicer ADR',
-				data: d => {
-					return d.splADR.toString()
+					return d.personCountRc.toString()
 						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				},
 			},
 			{
-				title: 'AERS',
+				title: 'Person Count DC',
 				data: d => {
-					return d.aers.toString()
+					return d.personCountDc.toString()
 						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				},
 			},
 			{
-				title: 'AERS PRR',
+				title: 'Publication Count (Descendant Concept Match)',
 				data: d => {
-					return (Math.ceil(d.aersPRR * 1000) / 1000)
-						.toFixed(4);
+					return d.descendantPmidCount.toString()
+						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				},
 			},
 			{
-				title: 'Prediction',
+				title: 'Publication Count (Exact Concept Match)',
 				data: d => {
-					return (Math.ceil(d.prediction * 1000) / 1000)
-						.toFixed(4);
+					return d.exactPmidCount.toString()
+						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				},
 			},
 			{
-				title: '<i id="dtNegCtrlRC" class="fa fa-database" aria-hidden="true"></i> RC',
-				data: d => d.recordCount,
+				title: 'Publication Count (Parent Concept Match)',
+				data: d => {
+					return d.parentPmidCount.toString()
+						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				},
 			},
 			{
-				title: '<i id="dtNegCtrlDRC" class="fa fa-database" aria-hidden="true"></i> DRC',
-				data: d => d.descendantRecordCount,
+				title: 'Publication Count (Ancestor Concept Match)',
+				data: d => {
+					return d.ancestorPmidCount.toString()
+						.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				},
+			},
+			{
+				title: 'Broad Concept',
+				data: d => {
+					return d.tooBroad.toString() == "1" ? 'Y' : 'N';
+				},
+			},
+			{
+				title: 'Pregnancy Concept',
+				data: d => {
+					return d.pregnancy.toString() == "1" ? 'Y' : 'N';
+				},
+			},
+			{
+				title: 'Drug Induced Concept',
+				data: d => {
+					return d.drugInduced.toString() == "1" ? 'Y' : 'N';
+				},
+			},
+			{
+				title: 'Drug Indicated for Condition',
+				data: d => {
+					return d.indication.toString() == "1" ? 'Y' : 'N';
+				},
+			},
+			{
+				title: 'Found on Product Label',
+				data: d => {
+					return d.splicer.toString() == "1" ? 'Y' : 'N';
+				},
+			},
+			{
+				title: 'Signal in FAERS',
+				data: d => {
+					return d.faers.toString() == "1" ? 'Y' : 'N';
+				},
+			},
+			{
+				title: 'User Excluded',
+				data: d => {
+					return d.userExcluded.toString() == "1" ? 'Y' : 'N';
+				},
+			},
+			{
+				title: 'User Included',
+				data: d => {
+					return d.userIncluded.toString() == "1" ? 'Y' : 'N';
+				},
 			},
 		];
 
@@ -526,106 +161,54 @@ define(['knockout',
 				['10', '25', '50', '100', 'All']
 			],
 			order: [
-				[16, 'asc'],
-				[17, 'desc']
+				[4, 'asc'],
+				[5, 'desc']
 			],
 			Facets: [{
-					'caption': 'Subset to candidate',
+					'caption': 'Suggested Negative Control',
 					'binding': d => {
-						if (d.medlineCt == 0 &&
-							d.medlineCase == 0 &&
-							d.medlineOther == 0 &&
-							d.splADR == 0 &&
-							d.aersPRR.toFixed(2) < 2.00 &&
-							d.prediction.toFixed(2) < 0.10) {
-							return 'Negative Controls';
-						} else if (d.prediction.toFixed(2) > 0.80) {
-							return 'Positive Controls'
-						} else {
-							return 'Other'
-						}
+						return d.negativeControl.toString() == "1" ? 'Yes' : 'No';
 					},
 				},
 				{
-					'caption': 'Has Records',
+					'caption': 'Publication Count (Exact Concept Match)',
 					'binding': d => {
-						var val = d.recordCount;
+						var val = d.exactPmidCount;
 						if (val.replace)
 							val = parseInt(val.replace(/\,/g, '')); // Remove comma formatting and treat as int
 						if (val > 0) {
-							return 'true'
+							return '> 0'
 						} else {
-							return 'false'
+							return '<= 0'
 						}
 					},
 				},
 				{
-					'caption': 'Has Descendant Records',
+					'caption': 'Found on Product Label',
 					'binding': d => {
-						var val = d.descendantRecordCount;
+						var val = d.splicer;
 						if (val.replace)
 							val = parseInt(val.replace(/\,/g, '')); // Remove comma formatting and treat as int
 						if (val > 0) {
-							return 'true'
+							return 'Yes'
 						} else {
-							return 'false'
+							return 'No'
 						}
 					},
 				},
 				{
-					'caption': 'Medline CT',
+					'caption': 'Signal in FAERS',
 					'binding': d => {
-						if (d.medlineCt == 0) {
-							return '0';
-						} else if (d.medlineCt > 0 && d.medlineCt <= 10) {
-							return '1-10'
+						var val = d.faers;
+						if (val.replace)
+							val = parseInt(val.replace(/\,/g, '')); // Remove comma formatting and treat as int
+						if (val > 0) {
+							return 'Yes'
 						} else {
-							return '11 +'
+							return 'No'
 						}
 					},
 				},
-				{
-					'caption': 'Medline Case',
-					'binding': d => {
-						if (d.medlineCase == 0) {
-							return '0';
-						} else if (d.medlineCase > 0 && d.medlineCase <= 10) {
-							return '1-10'
-						} else {
-							return '11 +'
-						}
-					},
-				},
-				{
-					'caption': 'Medline Other',
-					'binding': d => {
-						if (d.medlineOther == 0) {
-							return '0';
-						} else if (d.medlineOther > 0 && d.medlineOther <= 10) {
-							return '1-10'
-						} else {
-							return '11 +'
-						}
-					},
-				},
-				{
-					'caption': 'Splicer ADR',
-					'binding': d => d.splADR,
-				},
-				{
-					'caption': 'AERS',
-					'binding': d => {
-						if (d.aers == 0) {
-							return '0';
-						} else if (d.aers > 0 && d.aers <= 10) {
-							return '1-10'
-						} else if (d.aers > 10 && d.aers <= 100) {
-							return '11-100'
-						} else {
-							return '100+'
-						}
-					},
-				}
 			]
 		};
 
@@ -713,7 +296,7 @@ define(['knockout',
 			// Call the ajax service to generate the results
 			var negativeControlsJob = evidenceAPI.generateNegativeControls(service.sourceKey(), self.conceptSet()
 				.id, self.conceptSet()
-				.name(), self.conceptDomainId(), self.targetDomainId(), self.conceptIds());
+				.name(), self.conceptDomainId(), self.targetDomainId(), self.conceptIds(), service.csToInclude(), service.csToExclude());
 
 			// Mark as pending results
 			self.getSourceInfo(service.sourceKey())
@@ -824,10 +407,50 @@ define(['knockout',
 							evidenceSources[i].executionDuration(execDuration);
 							evidenceSources[i].status(gi[0].status);
 							evidenceSources[i].isValid(gi[0].isValid);
+							var giParams = JSON.parse(gi[i].params);
+							evidenceSources[i].csToInclude = ko.observable(giParams.csToInclude != null ? giParams.csToInclude : 0);
+							evidenceSources[i].csToIncludeCaption = ko.observable(null);
+							evidenceSources[i].csToIncludeLoading = ko.observable(true);
+							evidenceSources[i].csToExclude = ko.observable(giParams.csToExclude != null ? giParams.csToExclude : 0);
+							evidenceSources[i].csToExcludeCaption = ko.observable(null);
+							evidenceSources[i].csToExcludeLoading = ko.observable(true);
+							
+							csToIncludePromise = $.Deferred();
+							if (evidenceSources[i].csToInclude() > 0) {
+								csToIncludePromise = conceptSetAPI.getConceptSet(evidenceSources[i].csToInclude());
+							} else {
+								csToIncludePromise.resolve();
+								evidenceSources[i].csToIncludeLoading(false);
+							}
+							csToExcludePromise = $.Deferred();
+							if (evidenceSources[i].csToExclude() > 0) {
+								csToExcludePromise = conceptSetAPI.getConceptSet(evidenceSources[i].csToExclude());
+							} else {
+								csToExcludePromise.resolve();
+								evidenceSources[i].csToExcludeLoading(false);
+							}
+							
+							$.when(csToIncludePromise, csToExcludePromise)
+								.done(function (csInclude, csExclude) {
+									if (csInclude != null && csInclude.length > 0) {
+										evidenceSources[i].csToIncludeCaption(csInclude[0].name);
+										evidenceSources[i].csToIncludeLoading(false);
+									}
+									if (csExclude != null && csExclude.length > 0) {
+										evidenceSources[i].csToExcludeCaption(csExclude[0].name);
+										evidenceSources[i].csToExcludeLoading(false);
+									}
+							});
+							
 
 							if (gi[0].status == "RUNNING") {
 								self.pollForInfo();
 							}
+						} else {
+							evidenceSources[i].csToInclude = ko.observable(0);
+							evidenceSources[i].csToIncludeCaption = ko.observable(null);
+							evidenceSources[i].csToExclude = ko.observable(0);
+							evidenceSources[i].csToExcludeCaption = ko.observable(null);
 						}
 					});
 					self.evidenceSources(evidenceSources);
@@ -964,6 +587,50 @@ define(['knockout',
 			self.saveConceptSet("#txtNewConceptSetName", conceptSet, selectedConcepts);
 			$('conceptset-manager #modalSaveNew')
 				.modal('hide');
+		}
+		
+		self.chooseIncludeConceptSet = function (source) {
+			$('#ncModalConceptSetSelect').modal('show');
+			self.csTarget = source.csToInclude;
+			self.csTargetCaption = source.csToIncludeCaption;
+		}
+		
+		self.clearIncludeConceptSet = function (source) {
+			source.csToInclude(0);
+			source.csToIncludeCaption(null);
+		}
+		
+		self.chooseExcludeConceptSet = function (source) {
+			$('#ncModalConceptSetSelect').modal('show');
+			self.csTarget = source.csToExclude;
+			self.csTargetCaption = source.csToExcludeCaption;
+		}
+		
+		self.clearExcludeConceptSet = function (source) {
+			source.csToExclude(0);
+			source.csToExcludeCaption(null);
+		}
+		
+		self.conceptsetSelected = function(d) {
+			$('#ncModalConceptSetSelect').modal('hide');
+			conceptSetAPI.getConceptSet(d.id).then(function (csInfo) {
+				self.csTarget(csInfo.id);
+				self.csTargetCaption(csInfo.name);
+				/*
+				var conceptSetData = new ConceptSet({
+					id: d.id,
+					name: d.name,
+					expression: csExpression
+				});
+				self.targetExpression.removeAll();
+				self.targetExpression.push(conceptSetData);
+
+				vocabularyAPI.getConceptSetExpressionSQL(csExpression).then(
+					function (data) {
+						self.targetConceptSetSQL(data);
+					});
+				*/
+			});
 		}
 
 		// Evalute the concept set when this component is loaded
